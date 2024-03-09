@@ -1,9 +1,12 @@
 const express = require("express");
+const morgan = require("morgan");
+
+const todosRoutes = require("./app/routes/todosRoutes");
+const client = require("./app/config/db");
+
 const app = express();
 const port = 3000;
-const morgan = require("morgan");
-const todosRoutes = require("./app/routes/todosRoutes");
-
+app.use(express.json());
 app.use((req, res, next) => {
   console.log("middleware1 executed");
   next();

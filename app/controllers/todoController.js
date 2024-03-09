@@ -1,32 +1,32 @@
 const { request, response } = require("express");
 const todoService = require("../services/todoService");
 
-exports.getAllTodos = (req, res) => {
-  const todos = todoService.getAllTodos();
+exports.getAllTodos = async (req, res) => {
+  const todos = await todoService.getAllTodos();
   res.json(todos);
 };
-exports.getTodoById = (req, res) => {
+exports.getTodoById = async (req, res) => {
   const todoId = req.params.id;
-  const todo = todoService.getTodoById(todoId);
+  const todo = await todoService.getTodoById(todoId);
   if (todo) {
     res.json(todo);
   } else {
     res.status(404).json({ error: "todo not found" });
   }
 };
-exports.createTodo = (req, res) => {
+exports.createTodo = async (req, res) => {
   const newTodo = req.body;
-  const todo = todoService.createTodo(newTodo);
+  const todo = await todoService.createTodo(newTodo);
   res.json(todo);
 };
-exports.updateTodo = (req, res) => {
+exports.updateTodo = async (req, res) => {
   const todoId = req.params.id;
   const updatedTodo = req.body;
-  const todo = todoService.updateTodo(todoId, updatedTodo);
+  const todo = await todoService.updateTodo(todoId, updatedTodo);
   res.json(todo);
 };
-exports.deleteTodo = (req, res) => {
+exports.deleteTodo = async (req, res) => {
   const todoId = req.params.id;
-  todoService.deleteTodo(todoId);
+  await todoService.deleteTodo(todoId);
   res.json({ message: "todo deleted successfully" });
 };
