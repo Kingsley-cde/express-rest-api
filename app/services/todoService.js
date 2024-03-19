@@ -1,30 +1,33 @@
-const { ObjectId } = require("mongodb");
-const client = require("../config/db");
-
-// const datafilepath = path.join(__dirname, "../../data/todos.json");
-const database = client.db("todos_api_database");
-const collection = database.collection("todos");
+const { TodoModel } = require("../models/Todo");
 
 exports.getAllTodos = async () => {
-  const todos = await collection.find().toArray();
-  return todos;
+  const todos = await TodoModel.find();
+  if (!todos) {
+    return null;
+  } else {
+    return todos;
+  }
 };
 exports.getTodoById = async (id) => {
-  const todo = await collection.findOne({ _id: new ObjectId(id) });
-  return todo;
+  const todo = await TodoModel.findById(id);
+  if (!todo) {
+    return null;
+  } else {
+    return todo;
+  }
 };
 exports.createTodo = async (newTodo) => {
-  const todo = await collection.insertOne(newTodo);
+  const todo = await TodoModel.create(newTodo);
   return todo;
 };
 exports.updateTodo = async (id, updatedTodo) => {
-  const todo = await collection.findOneAndUpdate(
-    { _id: new ObjectId(id) },
-    { $set: updatedTodo },
-    { returnDocument: "after" }
-  );
-  return todo;
+  const todo = await TodoModel.findByIdAndUpdate(id, updatedTodo);
+  if (!todo) {
+    return null;
+  } else {
+    return todo;
+  }
 };
 exports.deleteTodo = async (id) => {
-  await collection.deleteOne({ _id: new ObjectId(id) });
+  const todo = await TodoModel.findByIdAndDelete(id);
 };

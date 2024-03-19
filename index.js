@@ -2,7 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 
 const todosRoutes = require("./app/routes/todosRoutes");
-const client = require("./app/config/db");
+const uri = require("./app/config/db");
 
 const app = express();
 const port = 3000;

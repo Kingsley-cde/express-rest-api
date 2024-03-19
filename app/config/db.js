@@ -1,18 +1,18 @@
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const mongodb = require("mongodb");
 
 dotenv.config();
-const uri = process.env.MONGODB_URI;
-const client = new mongodb.MongoClient(uri);
 
-async function run() {
-  await client.connect();
-}
-run()
+const uri = process.env.MONGODB_URI;
+
+const promise = mongoose.connect(uri);
+
+promise
   .then(() => {
-    console.log("connected to db");
+    console.log("connected to mingodb database");
   })
   .catch((err) => {
     console.log(err);
   });
-module.exports = client;
+
+module.exports = uri;
