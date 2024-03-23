@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 
 const todosRoutes = require("./app/routes/todosRoutes");
+const userRoutes = require("./app/routes/userRoutes");
 const uri = require("./app/config/db");
 
 const app = express();
@@ -17,6 +18,7 @@ const morganMiddleware = morgan(
 
 app.use(morganMiddleware);
 app.use("/todos", todosRoutes);
+app.use("/users", userRoutes);
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
